@@ -17,8 +17,14 @@ lint:
   stage: checks
   script: make lint
 
-.prepare_ssh:
-  before_script:
+deploy:
+  variables:
+    DOCKER_TLS_CERTDIR: ''
+  image: docker
+  services:
+    - docker:dind
+  stage: deploy
+    before_script:
     ##
     ## Install ssh-agent if not already installed, it is required by Docker.
     ## (change apt-get to yum if you use an RPM-based image)
@@ -43,15 +49,6 @@ lint:
     - chmod 700 ~/.ssh
     - ssh-keyscan -t rsa 37.139.42.129 >> ~/.ssh/known_hosts
     - docker login -u iqgroper --password $DOCKER_TOKEN
-
-deploy:
-  variables:
-    DOCKER_TLS_CERTDIR: ''
-  extends: .prepare_ssh
-  image: docker
-  services:
-    - docker:dind
-  stage: deploy
   script:
     - docker build -t iqgroper/crudapp-ci-cd:latest .
 	  - docker push iqgroper/crudapp-ci-cd:latest
