@@ -27,8 +27,8 @@ func TestCreate(t *testing.T) {
 	expectedNote := &Note{
 		ID:        0,
 		Text:      "first task",
-		CreatedAt: time.Now().Round(time.Minute),
-		UpdatedAt: time.Now().Round(time.Minute),
+		CreatedAt: time.Now().Round(time.Second),
+		UpdatedAt: time.Now().Round(time.Second),
 	}
 
 	reqBody, err := json.Marshal(newNote)
@@ -60,22 +60,6 @@ func TestCreate(t *testing.T) {
 		t.Errorf("Err unmarshalling: %v", errMarshal)
 	}
 
-	// if recievedNote.Text != expectedNote.Text {
-	// 	t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
-	// }
-
-	// if recievedNote.CreatedAt != expectedNote.CreatedAt {
-	// 	t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
-	// }
-
-	// if recievedNote.UpdatedAt != expectedNote.UpdatedAt {
-	// 	t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
-	// }
-
-	// if recievedNote.ID != expectedNote.ID {
-	// 	t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
-	// }
-
 	if !reflect.DeepEqual(recievedNote, expectedNote) {
 		t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
 	}
@@ -88,14 +72,14 @@ func TestGet(t *testing.T) {
 			{
 				ID:        0,
 				Text:      "first note",
-				CreatedAt: time.Now().Add(-48 * time.Hour).Round(time.Hour),
-				UpdatedAt: time.Now().Round(time.Hour),
+				CreatedAt: time.Now().Add(-48 * time.Hour).Round(time.Second),
+				UpdatedAt: time.Now().Round(time.Second),
 			},
 			{
 				ID:        1,
 				Text:      "second note",
-				CreatedAt: time.Now().Add(-24 * time.Hour).Round(time.Hour),
-				UpdatedAt: time.Now().Add(-4 * time.Hour).Round(time.Hour),
+				CreatedAt: time.Now().Add(-24 * time.Hour).Round(time.Second),
+				UpdatedAt: time.Now().Add(-4 * time.Hour).Round(time.Second),
 			},
 		},
 	}
@@ -143,14 +127,14 @@ func TestList(t *testing.T) {
 			{
 				ID:        0,
 				Text:      "first note",
-				CreatedAt: time.Now().Add(-48 * time.Hour).Round(time.Hour),
-				UpdatedAt: time.Now().Round(time.Hour),
+				CreatedAt: time.Now().Add(-48 * time.Hour).Round(time.Second),
+				UpdatedAt: time.Now().Round(time.Second),
 			},
 			{
 				ID:        1,
 				Text:      "second note",
-				CreatedAt: time.Now().Add(-24 * time.Hour).Round(time.Hour),
-				UpdatedAt: time.Now().Add(-4 * time.Hour).Round(time.Hour),
+				CreatedAt: time.Now().Add(-24 * time.Hour).Round(time.Second),
+				UpdatedAt: time.Now().Add(-4 * time.Hour).Round(time.Second),
 			},
 		},
 	}
