@@ -1,4 +1,4 @@
-module crudapp
+module golang-hw9
 
 go 1.19
 

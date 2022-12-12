@@ -6,6 +6,6 @@ build:
 lint:
 	golangci-lint run -v --modules-dowload-mod=vendor ./crudapp
 
-# .PHONY: docker
-# docker:
-# 	docker build 
+.PHONY: tests
+tests:
+	go test -v
