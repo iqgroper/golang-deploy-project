@@ -1,0 +1,27 @@
+linters:
+  disable-all: true
+  enable:
+    - errcheck      # default linter
+    - gosimple      # default linter
+    - govet         # default linter
+    - ineffassign   # default linter
+    - staticcheck   # default linter
+    - typecheck     # default linter
+    - unused        # default linter
+    - bodyclose
+    - dupl
+    - goconst
+    - gocritic
+    - gocyclo
+    - nakedret
+    - prealloc
+    - structcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - varcheck
+  fast: false
+
+output:
+  format: colored-line-number
