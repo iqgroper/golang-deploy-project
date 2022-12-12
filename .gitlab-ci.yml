@@ -1,6 +1,7 @@
 stages:
   - build
   - checks
+  - deploy
 
 build:
   image: golang:1.19
@@ -10,9 +11,18 @@ build:
 tests:
   image: golang:1.19
   stage: checks
-  script: make test
+  script: make tests
   
 lint:
   image: golangci/golangci-lint:v1.42.1
   stage: checks
   script: make lint
+
+deploy:
+  image: alpine
+  stage: deploy
+  environment:
+    url: http://37.139.42.129
+  only:
+    - master
+    - main
