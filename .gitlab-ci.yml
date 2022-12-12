@@ -8,7 +8,7 @@ build:
   script: make build
 
 tests:
-  image: golang:alpine
+  image: golang:1.19
   stage: checks
   script: make test
   
