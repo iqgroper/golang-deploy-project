@@ -23,6 +23,7 @@ deploy:
   script:
     - pwd
   environment:
+    name: prod
     url: http://37.139.42.129
   only:
     - master
