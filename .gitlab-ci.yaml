@@ -1,0 +1,7 @@
+build:
+  image: golang:1.19
+  script: make build
+
+lint:
+  image: golangci/golangci-lint:v1.42.1
+  script: make lint
