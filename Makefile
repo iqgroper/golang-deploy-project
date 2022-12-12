@@ -4,7 +4,7 @@ build:
 
 .PHONY: lint
 lint:
-	golangci-lint run -v --modules-download-mod=vendor ./crudapp
+	golangci-lint run -v --modules-download-mod=vendor ./crudapp...
 
 .PHONY: tests
 tests:
