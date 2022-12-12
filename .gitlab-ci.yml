@@ -1,11 +1,10 @@
 stages:
-  - build
   - checks
   - deploy
 
 build:
   image: golang:1.19
-  stage: build
+  stage: checks
   script: make build
 
 tests:
@@ -18,11 +17,13 @@ lint:
   stage: checks
   script: make lint
 
-# deploy:
-#   image: alpine
-#   stage: deploy
-#   environment:
-#     url: http://37.139.42.129
-#   only:
-#     - master
-#     - main
+deploy:
+  image: docker
+  stage: deploy
+  script:
+
+  environment:
+    url: http://37.139.42.129
+  only:
+    - master
+    - main

@@ -8,4 +8,4 @@ lint:
 
 .PHONY: tests
 tests:
-	go test -v
+	go test -v ./crudapp
