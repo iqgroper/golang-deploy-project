@@ -1,15 +1,18 @@
+stages:
+  - build
+  - checks
+
 build:
   image: golang:1.19
-  # before_script: 
-  #   - apt-get update && apt-get install
+  stage: build
   script: make build
 
 tests:
   image: golang:alpine
-  # before_script: 
-  #   - apt-get update && apt-get install
+  stage: checks
   script: make test
   
 lint:
   image: golangci/golangci-lint:v1.42.1
+  stage: checks
   script: make lint

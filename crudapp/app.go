@@ -30,7 +30,10 @@ func (store *NoteStorage) List(w http.ResponseWriter, r *http.Request) {
 		log.Println("Marshall error")
 		http.Error(w, "storage err", http.StatusInternalServerError)
 	}
-	w.Write(body)
+	_, errWrite := w.Write(body)
+	if errWrite != nil {
+		http.Error(w, "write err", http.StatusInternalServerError)
+	}
 }
 
 func (store *NoteStorage) Get(w http.ResponseWriter, r *http.Request) {
@@ -55,7 +58,10 @@ func (store *NoteStorage) Get(w http.ResponseWriter, r *http.Request) {
 				log.Println("Marshall error")
 				http.Error(w, "storage err", http.StatusInternalServerError)
 			}
-			w.Write(body)
+			_, errWrite := w.Write(body)
+			if errWrite != nil {
+				http.Error(w, "write err", http.StatusInternalServerError)
+			}
 			return
 		}
 	}
@@ -73,7 +79,10 @@ func (store *NoteStorage) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req := make(map[string]string)
-	json.Unmarshal(reqBody, &req)
+	errJSON := json.Unmarshal(reqBody, &req)
+	if errJSON != nil {
+		http.Error(w, "err unmarshalling", http.StatusInternalServerError)
+	}
 
 	if req["text"] == "" {
 		http.Error(w, "request body err", http.StatusBadRequest)
@@ -92,7 +101,10 @@ func (store *NoteStorage) Create(w http.ResponseWriter, r *http.Request) {
 		log.Println("Marshall error")
 		http.Error(w, "response err", http.StatusInternalServerError)
 	}
-	w.Write(respBody)
+	_, errWrite := w.Write(respBody)
+	if errWrite != nil {
+		http.Error(w, "write err", http.StatusInternalServerError)
+	}
 }
 
 func (store *NoteStorage) Update(w http.ResponseWriter, r *http.Request) {
@@ -112,7 +124,10 @@ func (store *NoteStorage) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req := make(map[string]string)
-	json.Unmarshal(reqBody, &req)
+	errJSON := json.Unmarshal(reqBody, &req)
+	if errJSON != nil {
+		http.Error(w, "err unmarshalling", http.StatusInternalServerError)
+	}
 
 	if req["text"] == "" {
 		http.Error(w, "request body err", http.StatusBadRequest)
@@ -122,7 +137,11 @@ func (store *NoteStorage) Update(w http.ResponseWriter, r *http.Request) {
 		if note.ID == requiredID {
 			note.Text = req["text"]
 			note.UpdatedAt = time.Now()
-			w.Write([]byte("success"))
+
+			_, errWrite := w.Write([]byte("success"))
+			if errWrite != nil {
+				http.Error(w, "write err", http.StatusInternalServerError)
+			}
 			return
 		}
 	}
@@ -154,7 +173,10 @@ func (store *NoteStorage) Delete(w http.ResponseWriter, r *http.Request) {
 	store.NoteList[len(store.NoteList)-1] = nil
 	store.NoteList = store.NoteList[:len(store.NoteList)-1]
 
-	w.Write([]byte("success"))
+	_, errWrite := w.Write([]byte("success"))
+	if errWrite != nil {
+		http.Error(w, "write err", http.StatusInternalServerError)
+	}
 }
 
 func main() {
