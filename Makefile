@@ -9,3 +9,8 @@ lint:
 .PHONY: tests
 tests:
 	go test -v ./crudapp
+
+.PHONY: docker
+docker:
+	docker build -t iqgroper/crudapp-ci-cd:latest .
+	docker push iqgroper/crudapp-ci-cd:latest
