@@ -18,11 +18,11 @@ lint:
   stage: checks
   script: make lint
 
-deploy:
-  image: alpine
-  stage: deploy
-  environment:
-    url: http://37.139.42.129
-  only:
-    - master
-    - main
+# deploy:
+#   image: alpine
+#   stage: deploy
+#   environment:
+#     url: http://37.139.42.129
+#   only:
+#     - master
+#     - main
