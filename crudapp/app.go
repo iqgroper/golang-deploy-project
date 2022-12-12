@@ -187,7 +187,10 @@ func main() {
 	}
 
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Im alive!"))
+		_, errWrite := w.Write([]byte("Im alive!"))
+		if errWrite != nil {
+			http.Error(w, "write err", http.StatusInternalServerError)
+		}
 	})
 	r.HandleFunc("/note/{id:[0-9]+}", store.Get).Methods("GET")
 	r.HandleFunc("/note", store.Create).Methods("POST")
