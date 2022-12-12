@@ -91,8 +91,8 @@ func (store *NoteStorage) Create(w http.ResponseWriter, r *http.Request) {
 	newNote := &Note{
 		ID:        store.LastID,
 		Text:      req["text"],
-		CreatedAt: time.Now().Round(time.Minute),
-		UpdatedAt: time.Now().Round(time.Minute),
+		CreatedAt: time.Now().Round(time.Second),
+		UpdatedAt: time.Now().Round(time.Second),
 	}
 	store.LastID++
 
@@ -136,7 +136,7 @@ func (store *NoteStorage) Update(w http.ResponseWriter, r *http.Request) {
 	for _, note := range store.NoteList {
 		if note.ID == requiredID {
 			note.Text = req["text"]
-			note.UpdatedAt = time.Now().Round(time.Minute)
+			note.UpdatedAt = time.Now().Round(time.Second)
 
 			_, errWrite := w.Write([]byte("success"))
 			if errWrite != nil {
