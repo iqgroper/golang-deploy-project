@@ -21,7 +21,7 @@ deploy:
   image: docker
   stage: deploy
   script:
-
+    - pwd
   environment:
     url: http://37.139.42.129
   only:
