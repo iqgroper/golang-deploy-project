@@ -1,15 +1,13 @@
 build:
   image: golang:1.19
-  before_script: 
-    - apt-get update && apt-get install
-  script: 
-    - pwd
-    - make build
+  # before_script: 
+  #   - apt-get update && apt-get install
+  script: make build
 
 tests:
   image: golang:alpine
-  before_script: 
-    - apt-get update && apt-get install
+  # before_script: 
+  #   - apt-get update && apt-get install
   script: make test
   
 lint:
