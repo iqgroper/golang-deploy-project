@@ -7,10 +7,10 @@ build:
   stage: checks
   script: make build
 
-# tests:
-#   image: golang:1.18
-#   stage: checks
-#   script: make tests
+tests:
+  image: golang:1.18
+  stage: checks
+  script: make tests
   
 lint:
   image: golangci/golangci-lint:v1.42.1
