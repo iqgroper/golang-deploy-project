@@ -42,7 +42,7 @@ stages:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan -t rsa 37.139.42.129 >> ~/.ssh/known_hosts
-    - docker login -u iqgroper --password $DOCKER_TOKEN
+    - docker login --username iqgroper --password $DOCKER_TOKEN
 
 deploy:
   variables:
