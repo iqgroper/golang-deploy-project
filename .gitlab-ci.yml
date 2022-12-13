@@ -2,20 +2,20 @@ stages:
   - checks
   - deploy
 
-# build:
-#   image: golang:1.18
-#   stage: checks
-#   script: make build
+build:
+  image: golang:1.18
+  stage: checks
+  script: make build
 
-# tests:
-#   image: golang:1.18
-#   stage: checks
-#   script: make tests
+tests:
+  image: golang:1.18
+  stage: checks
+  script: make tests
   
-# lint:
-#   image: golangci/golangci-lint:v1.42.1
-#   stage: checks
-#   script: make lint
+lint:
+  image: golangci/golangci-lint:v1.42.1
+  stage: checks
+  script: make lint
 
 .prepare_ssh:
   before_script:
