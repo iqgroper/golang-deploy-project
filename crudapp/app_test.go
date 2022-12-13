@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http/httptest"
-	"reflect"
 	"testing"
 	"time"
 
@@ -60,9 +59,16 @@ func TestCreate(t *testing.T) {
 		t.Errorf("Err unmarshalling: %v", errMarshal)
 	}
 
-	if !reflect.DeepEqual(recievedNote, expectedNote) {
+	if recievedNote.ID != expectedNote.ID {
 		t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
 	}
+
+	if recievedNote.Text != expectedNote.Text {
+		t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
+	}
+	// if !reflect.DeepEqual(recievedNote, expectedNote) {
+	// 	t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
+	// }
 }
 
 func TestGet(t *testing.T) {
@@ -114,9 +120,17 @@ func TestGet(t *testing.T) {
 
 	expectedNote := store.NoteList[1]
 
-	if !reflect.DeepEqual(recievedNote, expectedNote) {
+	if recievedNote.ID != expectedNote.ID {
 		t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
 	}
+
+	if recievedNote.Text != expectedNote.Text {
+		t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
+	}
+
+	// if !reflect.DeepEqual(recievedNote, expectedNote) {
+	// 	t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNote, recievedNote)
+	// }
 
 }
 
@@ -165,9 +179,19 @@ func TestList(t *testing.T) {
 
 	expectedNotes := store.NoteList
 
-	if !reflect.DeepEqual(recievedNotes, expectedNotes) {
-		t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNotes, recievedNotes)
+	for idx, recievedNote := range recievedNotes {
+		if recievedNote.ID != expectedNotes[idx].ID {
+			t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNotes[idx], recievedNote)
+		}
+
+		if recievedNote.Text != expectedNotes[idx].Text {
+			t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNotes[idx], recievedNote)
+		}
 	}
+
+	// if !reflect.DeepEqual(recievedNotes, expectedNotes) {
+	// 	t.Errorf("response isnt correct\nWanted: %v\nGot: %v", expectedNotes, recievedNotes)
+	// }
 
 }
 
