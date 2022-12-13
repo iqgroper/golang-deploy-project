@@ -35,7 +35,8 @@ lint:
     # without extra base64 encoding.
     # https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
     #
-    - cat "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - echo "$SSH_PRIVATE_KEY"
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     #
     # Create the SSH directory and give it the right permissions
     #
