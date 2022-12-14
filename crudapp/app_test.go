@@ -154,7 +154,7 @@ func TestList(t *testing.T) {
 	}
 
 	port := "8080"
-	req := httptest.NewRequest("GET", fmt.Sprintf("localhost:%s/note", port), nil)
+	req := httptest.NewRequest("GET", fmt.Sprintf("localhost:%s/note?order_by=id", port), nil)
 
 	w := httptest.NewRecorder()
 

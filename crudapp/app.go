@@ -108,10 +108,12 @@ func (store *NoteStorage) Create(w http.ResponseWriter, r *http.Request) {
 	errJSON := json.Unmarshal(reqBody, &req)
 	if errJSON != nil {
 		http.Error(w, "err unmarshalling", http.StatusInternalServerError)
+		return
 	}
 
 	if req["text"] == "" {
 		http.Error(w, "request body err", http.StatusBadRequest)
+		return
 	}
 
 	newNote := &Note{
@@ -128,6 +130,7 @@ func (store *NoteStorage) Create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("Marshall error")
 		http.Error(w, "response err", http.StatusInternalServerError)
+		return
 	}
 	_, errWrite := w.Write(respBody)
 	if errWrite != nil {
@@ -226,7 +229,7 @@ func main() {
 	r.HandleFunc("/note/{id:[0-9]+}", store.Delete).Methods("DELETE")
 	r.HandleFunc("/note", store.List).Methods("GET").Queries("order_by", "")
 
-	port := ":8080"
+	port := ":80"
 	fmt.Println("starting server at", port)
 	log.Fatal(http.ListenAndServe(port, r))
 }
