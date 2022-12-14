@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"sort"
 	"strconv"
 	"time"
 
@@ -25,7 +26,32 @@ type NoteStorage struct {
 }
 
 func (store *NoteStorage) List(w http.ResponseWriter, r *http.Request) {
-	body, err := json.Marshal(store.NoteList)
+
+	orderBy := r.URL.Query().Get("order_by")
+
+	respSlice := make([]*Note, len(store.NoteList))
+	copy(respSlice, store.NoteList)
+
+	switch orderBy {
+	case "id":
+		sort.SliceStable(respSlice, func(i, j int) bool {
+			return respSlice[i].ID < respSlice[j].ID
+		})
+	case "text":
+		sort.SliceStable(respSlice, func(i, j int) bool {
+			return respSlice[i].Text < respSlice[j].Text
+		})
+	case "created_at":
+		sort.SliceStable(respSlice, func(i, j int) bool {
+			return respSlice[i].CreatedAt.Unix() < respSlice[j].CreatedAt.Unix()
+		})
+	case "updated_at":
+		sort.SliceStable(respSlice, func(i, j int) bool {
+			return int(respSlice[i].UpdatedAt.Unix()) < int(respSlice[j].UpdatedAt.Unix())
+		})
+	}
+
+	body, err := json.Marshal(respSlice)
 	if err != nil {
 		log.Println("Marshall error")
 		http.Error(w, "storage err", http.StatusInternalServerError)
@@ -95,6 +121,8 @@ func (store *NoteStorage) Create(w http.ResponseWriter, r *http.Request) {
 		UpdatedAt: time.Now().Round(time.Second),
 	}
 	store.LastID++
+
+	store.NoteList = append(store.NoteList, newNote)
 
 	respBody, err := json.Marshal(newNote)
 	if err != nil {
@@ -183,7 +211,7 @@ func main() {
 	r := mux.NewRouter()
 
 	store := &NoteStorage{
-		NoteList: make([]*Note, 5),
+		NoteList: make([]*Note, 0),
 	}
 
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
