@@ -58,7 +58,7 @@ deploy:
     - ssh ubuntu@37.139.42.129 'sudo docker stop crudapp || echo 1'
     - ssh ubuntu@37.139.42.129 'sudo docker rm crudapp || echo 1'
     - ssh ubuntu@37.139.42.129 'sudo docker pull iqgroper/crudapp-ci-cd:latest'
-    - ssh ubuntu@37.139.42.129 'sudo docker run --rm -d -p 8080:8080 --name=crudapp iqgroper/crudapp-ci-cd:latest'
+    - ssh ubuntu@37.139.42.129 'sudo docker run --rm -d -p 80:80 --name=crudapp iqgroper/crudapp-ci-cd:latest'
   environment:
     name: prod
     url: http://37.139.42.129
